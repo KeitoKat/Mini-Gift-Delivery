@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { Container, Typography, Button, Grid } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
 import useStyles from "./styles";
 import CardItem from "./CartItem/CartItem";
@@ -13,9 +14,12 @@ if(!cart.line_items) return "Checking your order...";
 
 // FUNCTIONS 
 
-  const EmptyCart = () => {
-    <Typography variant="subtitle1">Your shopping cart is empty. Start shopping now! </Typography>
-  }
+  const EmptyCart = () => (
+    <Typography variant="subtitle1">
+      Your shopping cart is empty. 
+      <Link to="/" className={classes.link}> Start shopping now</Link>!
+    </Typography>
+  )
 
   const FilledCart = () => {
     return (

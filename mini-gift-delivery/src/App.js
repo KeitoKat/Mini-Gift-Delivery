@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { commerce } from "./lib/commerce";
 import { Products, NavBar, Cart } from "./components";
+import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
 
 const App = () => {
 // STATES
@@ -31,14 +32,27 @@ const App = () => {
   }, []);
 
   return (
-    <div>
-      
-      <NavBar totalItems={cart.total_items}/>
-      {/* <Products products={products} onAddToCart={handleAddToCart}/> */}
-      <Cart cart={cart}/>
+    <Router>
 
-    </div>
-  )
+{/* NAVBAR IS ALWAYS VISIBLEE */}
+        <NavBar totalItems={cart.total_items}/>
+
+{/* SWITCH BETWEEN THE TWO ROUTES */}
+      <Switch>
+
+        <Route exact path="/">
+          <Products products={products} onAddToCart={handleAddToCart}/>
+        </Route>
+
+        <Route exact path="/cart">
+          <Cart cart={cart}/>
+        </Route>
+  
+      </Switch>
+    
+    </Router>
+    )
+    
 }
 
 export default App;
