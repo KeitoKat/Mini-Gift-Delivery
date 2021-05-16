@@ -22,8 +22,9 @@ const AddressForm = ({ checkoutToken }) => {
   // FETCH FUNCTIONS
   const fetchShippingCountries = async (checkoutTokenId) => {
     const { countries } = await commerce.services.localeListShippingCountries(checkoutTokenId);
-    console.log(countries)
+    
     setShippingCounries(countries);
+    setShippingCountry(Object.keys(countries));
   }
 
    // USEEFFECT
@@ -31,6 +32,12 @@ const AddressForm = ({ checkoutToken }) => {
     fetchShippingCountries(checkoutToken.id);
   }, [])
 
+  // OTHER FUNCTIONS
+  const countries = Object.entries(shippingCountries).map(([code, name])=>
+  (
+    {id: code, option: name}
+  ))
+ console.log(countries)
   // MAIN
   return (
     <>
@@ -46,12 +53,14 @@ const AddressForm = ({ checkoutToken }) => {
               <FormInput required name="zipcode" label="Zip / Postalcode" />
       
       {/* SHIPPING COUNTRY         */}
-              {/* <Grid item sx={12} sm={6}>
+              <Grid item sx={12} sm={6}>
                 <InputLabel>Shipping Country</InputLabel>
-                <Select value={} fullWidth onChange={}>
-                  <MenuItem key={} value={}>Select Country</MenuItem>
+                <Select value={shippingCountry} fullWidth onChange={(e)=>setShippingCountry(e.target.value)}>
+                  {countries.map((country)=> (
+                    <MenuItem key={country.id} value={country.id}>{country.option}</MenuItem>
+                  ))}
                 </Select>
-              </Grid> */}
+              </Grid>
 
       {/* SHIPPING COUNTRY         */}
               {/* <Grid item sx={12} sm={6}>

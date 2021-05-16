@@ -59,7 +59,7 @@ console.log(token);
             </Stepper>
         
           {/* LAST STEP? */}
-          {activeStep === steps.length ? ConfirmOrder() : Form()}
+          {activeStep === steps.length ? ConfirmOrder() : checkoutToken && Form()}
           </Paper>
         </main>
       </div>
