@@ -30,7 +30,7 @@ console.log(token);
     }
 
     generateToken();
-  }, []);
+  }, [cart]);
 
   // FUNCTIONS
   const ConfirmOrder = () => {
