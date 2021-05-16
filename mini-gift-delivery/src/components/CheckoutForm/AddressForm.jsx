@@ -17,7 +17,6 @@ const AddressForm = ({ checkoutToken }) => {
   const [shippingSubdivision, setShippingSubdivision] = useState('');
   const [shippingOptions, setShippingOptions] = useState([]);
   const [shippingOption, setShippingOption] = useState('');
-console.log(checkoutToken)
  
 
   // FETCH FUNCTIONS
