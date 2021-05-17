@@ -15,13 +15,14 @@ const Checkout = ({ cart }) => {
   // USESTATE
   const [activeStep, setActiveStep] = useState(0);
   const [checkoutToken, setCheckoutToken] = useState(null);
+  const [shippingData, setShippingData] = useState({});
 
   // USEEFFECT
   useEffect(() => {
     const generateToken = async () => {
       try {
       const token = await commerce.checkout.generateToken(cart.id, { type: 'cart' });
-console.log(token);
+
       setCheckoutToken(token);
       }
       catch (error) {
@@ -38,10 +39,23 @@ console.log(token);
       <h3>Your Order Has Been Made! Have a nice day.</h3>
     </div>
   }
+
+  const handleNext = () => (
+    setActiveStep(previousActiveStep => previousActiveStep + 1)
+  )
+
+  const handleBack = () => (
+    setActiveStep(previousActiveStep => previousActiveStep - 1)
+  )
+
+  const nextButtonHandler = (data) => {
+    setShippingData(data);
+    handleNext();
+  }
   
   // RENDER STEPPER
   const Form = () => 
-    activeStep === 0 ? <AddressForm checkoutToken={checkoutToken}/> : <PaymentForm />
+    activeStep === 0 ? <AddressForm checkoutToken={checkoutToken} next={nextButtonHandler}/> : <PaymentForm shippingData={shippingData} />
   
   // MAIN
   return (
