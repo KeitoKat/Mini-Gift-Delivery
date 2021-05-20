@@ -8,7 +8,7 @@ import PaymentForm from "../PaymentForm";
 
 const steps = ['Shipping Address', 'Payment details'];
 
-const Checkout = ({ cart }) => {
+const Checkout = ({ cart, order, handleCaptureCheckout, error }) => {
 
   const classes = useStyle();
 
@@ -35,9 +35,10 @@ const Checkout = ({ cart }) => {
 
   // FUNCTIONS
   const ConfirmOrder = () => {
+    return (
     <div>
-      <h3>Your Order Has Been Made! Have a nice day.</h3>
-    </div>
+      <Typography variant="h6" color="primary">Our order Has Been Made! Have a nice day.</Typography>
+    </div>)
   }
 
   const handleNext = () => (
@@ -55,7 +56,7 @@ const Checkout = ({ cart }) => {
   
   // RENDER STEPPER
   const Form = () => 
-    activeStep === 0 ? <AddressForm checkoutToken={checkoutToken} next={nextButtonHandler}/> : <PaymentForm shippingData={shippingData} />
+    activeStep === 0 ? <AddressForm checkoutToken={checkoutToken} next={nextButtonHandler}/> : <PaymentForm shippingData={shippingData} checkoutToken={checkoutToken} handleBack={handleBack} handleCaptureCheckout={handleCaptureCheckout} handleNext={handleNext}/>
   
   // MAIN
   return (
@@ -71,7 +72,7 @@ const Checkout = ({ cart }) => {
               </Step>
               ))}
             </Stepper>
-        
+        {console.log(activeStep)}
           {/* LAST STEP? */}
           {activeStep === steps.length ? ConfirmOrder() : checkoutToken && Form()}
           </Paper>

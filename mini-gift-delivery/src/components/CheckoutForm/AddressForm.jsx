@@ -43,7 +43,7 @@ const AddressForm = ({ checkoutToken, next }) => {
     setShippingOptions(options)
     setShippingOption(options[0].id);
   }
-
+  
    // USEEFFECT
   useEffect(() => {
       fetchShippingCountries(checkoutToken.id);
@@ -78,7 +78,7 @@ const AddressForm = ({ checkoutToken, next }) => {
     <>
       <Typography variant="h6" gutterBottom>Shipping Address</Typography>
         <FormProvider {...methods}>
-          <form onChange={methods.handleSubmit((e)=> next({...e, shippingCountries, shippingSubdivision, shippingOption}))}>
+          <form onSubmit={methods.handleSubmit((e)=> next({...e, shippingCountries, shippingSubdivision, shippingOption}))}>
             <Grid container spacing={3}>
               <FormInput name="firstname" label="First name"/>
               <FormInput name="lastname" label="Last name" />
