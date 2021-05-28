@@ -40,7 +40,7 @@ const Checkout = ({ cart, order, handleCaptureCheckout, error }) => {
       <Typography variant="h6" color="primary">Our order Has Been Made! Have a nice day.</Typography>
     </div>)
   }
-
+  
   const handleNext = () => (
     setActiveStep(previousActiveStep => previousActiveStep + 1)
   )

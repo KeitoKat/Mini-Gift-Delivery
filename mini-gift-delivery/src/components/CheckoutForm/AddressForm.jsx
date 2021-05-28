@@ -70,17 +70,15 @@ const AddressForm = ({ checkoutToken, next }) => {
   ))
 
   const choices = shippingOptions.map((choice)=>({id:choice.id, option:`${choice.description} - (${choice.price.formatted_with_symbol})`}))
-  
-
 
   // MAIN
   return (
     <>
-      <Typography variant="h6" gutterBottom>Shipping Address</Typography>
+      <Typography variant="h6">Shipping Address</Typography>
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit((e)=> next({...e, shippingCountries, shippingSubdivision, shippingOption}))}>
             <Grid container spacing={3}>
-              <FormInput name="firstname" label="First name"/>
+              <FormInput name="firstname" label="First name" />
               <FormInput name="lastname" label="Last name" />
               <FormInput name="address1" label="Address" />
               <FormInput name="email" label="Email" />

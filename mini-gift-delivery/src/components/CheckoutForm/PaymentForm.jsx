@@ -53,7 +53,7 @@ const PaymentForm = ({ shippingData, checkoutToken, handleBack, handleCaptureChe
       <Review checkoutToken={checkoutToken}/>
 
       <Divider/>
-      <Typography variant="h6" gutterButtom style={{ margin: '20px 0' }}>Payment Method</Typography>
+      <Typography variant="h6" style={{ margin: '20px 0' }}>Payment Method</Typography>
       <Elements stripe={loadStripe(process.env.REACT_APP_STRIPE_PUBLIC_KEY)}>
         <ElementsConsumer>
           {({ elements, stripe }) => (
