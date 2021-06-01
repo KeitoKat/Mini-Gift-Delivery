@@ -7,6 +7,8 @@ const App = () => {
 // STATES
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState({});
+  const [order, setOrder] = useState({});
+  const [errorMessage, setErrorMessage] = useState('');
 
 // FETCH API FUNC
   const fetchProducts = async () => { 
@@ -19,7 +21,7 @@ const App = () => {
     setCart(await commerce.cart.retrieve());
   };
 
-  // FUNCTION HANDLERS
+  //HANDLER FUNCTIONS
   const handleAddToCart = async (productId, quantity) => {
       const { cart } = await commerce.cart.add(productId, quantity);
 
@@ -44,6 +46,24 @@ const App = () => {
     setCart(cart);
   }
 
+  const resetOrderCart = async () => {
+      const newCart = await commerce.cart.refresh();
+
+      setCart(newCart)
+  }
+
+  const handleCaptureCheckout = async (checkoutTokenId, newOrder) => {
+    try {
+      const incomingOrder = await commerce.checkout.capture(checkoutTokenId, newOrder);
+
+      setOrder(incomingOrder);
+      resetOrderCart();
+
+    } catch (error) {
+      setErrorMessage(error.data.error.message);
+    }
+  }
+
 
   // USE EFFECT
   useEffect(() => {
@@ -51,6 +71,10 @@ const App = () => {
     fetchCart();
   }, []);
 
+
+
+
+// MAIN
   return (
     <Router>
 
@@ -76,7 +100,12 @@ const App = () => {
 
         {/* CHECKOUT PAGE */}
         <Route exact path="/checkout">
-          <Checkout cart={cart} />
+          <Checkout 
+          cart={cart} 
+          order={order}
+          handleCaptureCheckout={handleCaptureCheckout}
+          error={errorMessage}
+          />
         </Route>
   
       </Switch>

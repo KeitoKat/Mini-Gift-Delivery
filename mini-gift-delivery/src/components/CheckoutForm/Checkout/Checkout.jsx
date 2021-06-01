@@ -8,20 +8,21 @@ import PaymentForm from "../PaymentForm";
 
 const steps = ['Shipping Address', 'Payment details'];
 
-const Checkout = ({ cart }) => {
+const Checkout = ({ cart, order, handleCaptureCheckout, error }) => {
 
   const classes = useStyle();
 
   // USESTATE
   const [activeStep, setActiveStep] = useState(0);
   const [checkoutToken, setCheckoutToken] = useState(null);
+  const [shippingData, setShippingData] = useState({});
 
   // USEEFFECT
   useEffect(() => {
     const generateToken = async () => {
       try {
       const token = await commerce.checkout.generateToken(cart.id, { type: 'cart' });
-console.log(token);
+
       setCheckoutToken(token);
       }
       catch (error) {
@@ -34,14 +35,28 @@ console.log(token);
 
   // FUNCTIONS
   const ConfirmOrder = () => {
+    return (
     <div>
-      <h3>Your Order Has Been Made! Have a nice day.</h3>
-    </div>
+      <Typography variant="h6" color="primary">Our order Has Been Made! Have a nice day.</Typography>
+    </div>)
+  }
+  
+  const handleNext = () => (
+    setActiveStep(previousActiveStep => previousActiveStep + 1)
+  )
+
+  const handleBack = () => (
+    setActiveStep(previousActiveStep => previousActiveStep - 1)
+  )
+
+  const nextButtonHandler = (data) => {
+    setShippingData(data);
+    handleNext();
   }
   
   // RENDER STEPPER
   const Form = () => 
-    activeStep === 0 ? <AddressForm checkoutToken={checkoutToken}/> : <PaymentForm />
+    activeStep === 0 ? <AddressForm checkoutToken={checkoutToken} next={nextButtonHandler}/> : <PaymentForm shippingData={shippingData} checkoutToken={checkoutToken} handleBack={handleBack} handleCaptureCheckout={handleCaptureCheckout} handleNext={handleNext}/>
   
   // MAIN
   return (
@@ -57,7 +72,7 @@ console.log(token);
               </Step>
               ))}
             </Stepper>
-        
+        {console.log(activeStep)}
           {/* LAST STEP? */}
           {activeStep === steps.length ? ConfirmOrder() : checkoutToken && Form()}
           </Paper>
