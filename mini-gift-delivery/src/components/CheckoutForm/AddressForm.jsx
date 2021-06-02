@@ -78,12 +78,12 @@ const AddressForm = ({ checkoutToken, next }) => {
         <FormProvider {...methods}>
           <form onSubmit={methods.handleSubmit((e)=> next({...e, shippingCountries, shippingSubdivision, shippingOption}))}>
             <Grid container spacing={3}>
-              <FormInput name="firstname" label="First name" />
-              <FormInput name="lastname" label="Last name" />
+              <FormInput name="firstName" label="First name" />
+              <FormInput name="lastName" label="Last name" />
               <FormInput name="address1" label="Address" />
               <FormInput name="email" label="Email" />
               <FormInput name="City" label="City" />
-              <FormInput name="zipcode" label="Zip / Postalcode" />
+              <FormInput name="zipCode" label="Zip / Postalcode" />
       
       {/* SHIPPING COUNTRY         */}
               <Grid item sx={12} sm={6}>
